@@ -1,15 +1,35 @@
 package io.github.frapples.utilscookbook.utils;
 
 
-import java.util.Date;
+import com.google.common.collect.Maps;
+import java.util.Map;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+class Point {
+
+    @Getter @Setter private Integer x;
+    @Getter @Setter private Integer y;
+    private Integer privateVar;
+}
 
 public class Main {
 
+    public static void convertDemo() {
+        Map map = Maps.newHashMap();
+        map.put("x", 1);
+        map.put("y", 2);
+        System.out.println(ConvertUtils.convertFromMap(map, Point.class));
+        System.out.println(ConvertUtils.convertToMap(new Point(3, 4, 0)));
+    }
+
     public static void main(String[] args) {
-        String salt = SecureUtils.randomSalt();
-        System.out.println(salt);
-
-        System.out.println(DatetimeUtils.timestamp());
-
+        convertDemo();
     }
 }
