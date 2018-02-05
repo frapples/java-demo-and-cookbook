@@ -1,6 +1,7 @@
 package io.github.frapples.springbootcookbook.web.controller;
 
 import io.github.frapples.springbootcookbook.biz.ResponseDTO;
+import io.github.frapples.springbootcookbook.web.resolver.UserId;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,8 +27,8 @@ public class HelloController {
     }
 
     /*
-    * 1. 演示了如何进行文件上传
-    * */
+     * 1. 演示了如何进行文件上传
+     * */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
     public ResponseDTO upload(@RequestParam("file") MultipartFile file,
@@ -53,5 +54,14 @@ public class HelloController {
             e.printStackTrace();
             return ResponseDTO.ofFailed();
         }
+    }
+
+    /*
+     * 1. 演示了使用自定义参数解析器@UserId
+     * */
+    @RequestMapping(value = "/arg", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseDTO customerArgResolver(@UserId String userId) {
+        return ResponseDTO.ofSuccess(userId);
     }
 }
