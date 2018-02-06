@@ -10,7 +10,7 @@
 
   <properties>
     <!-- 此处定义的属性，后面即可引用 -->
-    <org.springframework.version>3.0.5.RELEASE</org.springframework.version>
+    <org.springframework.version>4.3.10.RELEASE</org.springframework.version>
   </properties>
 
   <build>
@@ -42,10 +42,17 @@
       <version>20.0</version>
     </dependency>
     <dependency>
-      <!-- https://github.com/apache/commons-lang -->
+      <!-- 为java.lang中的类提供一系列工具类。https://github.com/apache/commons-lang -->
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <version>3.7</version>
+    </dependency>
+
+    <dependency>
+      <!-- apache commons io，提供了针对IO和文件的工具类。https://github.com/apache/commons-io -->
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.6</version>
     </dependency>
 
     <dependency>

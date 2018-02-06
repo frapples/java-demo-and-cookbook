@@ -2,7 +2,9 @@ package io.github.frapples.utilscookbook.utils;
 
 
 import com.google.common.collect.Maps;
+import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +31,16 @@ public class Main {
         System.out.println(ConvertUtils.convertToMap(new Point(3, 4, 0)));
     }
 
+    public static void fileDemo() {
+        try {
+            System.out.println(FileUtils.readCalssPathFile("files/customerFile.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         convertDemo();
+        fileDemo();
     }
 }
