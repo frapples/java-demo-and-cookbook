@@ -2,6 +2,8 @@ package io.github.frapples.springbootcookbook.web.config;
 
 import io.github.frapples.springbootcookbook.web.resolver.UserIdArgumentResolver;
 import java.util.List;
+import javax.servlet.MultipartConfigElement;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -23,5 +25,16 @@ public class WebConfig {
                 argumentResolvers.add(new UserIdArgumentResolver());
             }
         };
+    }
+
+
+    /*
+    * 1. 演示了设置上传文件的大小，以下将上传文件大小限制为10M
+    * */
+    @Bean
+    public MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        factory.setMaxFileSize(10L* 1024L * 1024L);
+        return factory.createMultipartConfig();
     }
 }
