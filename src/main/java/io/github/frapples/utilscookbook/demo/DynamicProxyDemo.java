@@ -1,5 +1,6 @@
 package io.github.frapples.utilscookbook.demo;
 
+import com.google.common.reflect.Reflection;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -19,8 +20,31 @@ public class DynamicProxyDemo {
 
     public static void main(String[] args) {
         NumerOperationInterface real = new RealObject();
-        real = RealObjectProxyHandler.wrap(real);
+        real = wrap(real);
         real.add(1, 2);
+    }
+
+    private static NumerOperationInterface wrap(NumerOperationInterface real) {
+        /* 这个函数只能传入接口, 因此被代理类需要实现接口 */
+        return (NumerOperationInterface) Proxy.newProxyInstance(
+            NumerOperationInterface.class.getClassLoader(),
+            new Class[]{NumerOperationInterface.class},
+            new RealObjectProxyHandler(real));
+    }
+}
+
+
+
+/*
+* 1. 使用guava提供的动态代理辅助函数，更简单的写法
+*
+* */
+
+class GuavaDynamicProxyDemo {
+    public static void main(String[] args) {
+        NumerOperationInterface real = new RealObject();
+        real = Reflection.newProxy(NumerOperationInterface.class, new RealObjectProxyHandler(real));
+        System.out.println(real.add(1, 3));
     }
 }
 
@@ -29,7 +53,7 @@ class RealObjectProxyHandler implements InvocationHandler {
 
     private Object proxied;
 
-    private RealObjectProxyHandler(Object proxied) {
+    public RealObjectProxyHandler(Object proxied) {
         this.proxied = proxied;
     }
 
@@ -39,13 +63,6 @@ class RealObjectProxyHandler implements InvocationHandler {
         return method.invoke(proxied, args);
     }
 
-    static public NumerOperationInterface wrap(NumerOperationInterface real) {
-        /* 这个函数只能传入接口, 因此被代理类需要实现接口 */
-        return (NumerOperationInterface) Proxy.newProxyInstance(
-            NumerOperationInterface.class.getClassLoader(),
-            new Class[]{NumerOperationInterface.class},
-            new RealObjectProxyHandler(real));
-    }
 }
 
 interface NumerOperationInterface {
