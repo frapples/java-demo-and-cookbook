@@ -1,12 +1,14 @@
 package io.github.frapples.springbootcookbook.web.controller;
 
 import io.github.frapples.springbootcookbook.biz.ResponseDTO;
+import io.github.frapples.springbootcookbook.web.config.EnvironmentalConfig;
 import io.github.frapples.springbootcookbook.web.resolver.UserId;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;

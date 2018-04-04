@@ -1,0 +1,19 @@
+server:
+  port: 8181
+  session:
+    cookie:
+      http-only: true
+      secure: true
+    timeout: 1800
+spring:
+  application:
+    name: demo
+    environment: test
+    version: 1.0.0
+  http:
+    encoding:
+      force: true
+    multipart:
+      resolve-lazily: true
+      max-file-size: 5MB
+
