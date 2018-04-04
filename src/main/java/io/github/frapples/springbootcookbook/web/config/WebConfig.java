@@ -1,8 +1,10 @@
 package io.github.frapples.springbootcookbook.web.config;
 
 import io.github.frapples.springbootcookbook.web.resolver.UserIdArgumentResolver;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.MultipartConfigElement;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,5 +38,17 @@ public class WebConfig {
         MultipartConfigFactory factory = new MultipartConfigFactory();
         factory.setMaxFileSize(10L* 1024L * 1024L);
         return factory.createMultipartConfig();
+    }
+
+    /*
+    * 1. 演示了RegexpMatcherCorsFilter的定义，并且使用它来实现跨域控制
+    * */
+    @Bean
+    public FilterRegistrationBean regexpMatcherCorsFilter() {
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        // 允许 *.xxx.com 跨域
+        String[] allowOrigins = new String[]{"https?://(.*).xxx.com(\\:\\d+)?"};
+        registrationBean.setFilter(new RegexpMatcherCorsFilter(allowOrigins));
+        return registrationBean;
     }
 }
