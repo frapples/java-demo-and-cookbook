@@ -1,4 +1,4 @@
-package io.github.frapples.utilscookbook.utils;
+package io.github.frapples.utilscookbook.utils.network;
 
 import com.alibaba.fastjson.JSON;
 import java.io.IOException;
@@ -18,11 +18,12 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 
-/*
+/**
  * https://www.jianshu.com/p/b2057bcf512d
  * 1. 演示如何使用ApacheHttpClient发送请求
  * 2. 将内存中的字符串向外传输时, 要特别注意编码问题. 最好的方式是手动控制转为bytes
- * */
+ * @author Frapples
+ **/
 public class HttpClientUtils {
 
     public String post(String url, Map<String, String> para) throws IOException {
