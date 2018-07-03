@@ -1,4 +1,4 @@
-package io.github.frapples.utilscookbook.utils.convert;
+package io.github.frapples.utilscookbook.utils.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-class Point {
+public class Point {
 
     @Getter
     @Setter
