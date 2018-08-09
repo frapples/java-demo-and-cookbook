@@ -1,4 +1,4 @@
-package io.github.frapples.springbootcookbook.biz;
+package io.github.frapples.springbootcookbook.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

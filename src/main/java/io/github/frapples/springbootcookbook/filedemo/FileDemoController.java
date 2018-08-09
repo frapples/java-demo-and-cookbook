@@ -1,19 +1,15 @@
-package io.github.frapples.springbootcookbook.web.controller;
+package io.github.frapples.springbootcookbook.filedemo;
 
-import io.github.frapples.springbootcookbook.biz.ResponseDTO;
-import io.github.frapples.springbootcookbook.web.config.EnvironmentalConfig;
+import io.github.frapples.springbootcookbook.common.dto.ResponseDTO;
 import io.github.frapples.springbootcookbook.web.resolver.UserId;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,17 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-@RequestMapping("/api")
-public class HelloController {
-
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    @ResponseBody
-    public Map<String, String> hello() {
-        Map map = new HashMap();
-        map.put("a", "1");
-        map.put("b", "2");
-        return map;
-    }
+@RequestMapping("/api/filedemo")
+public class FileDemoController {
 
     /*
      * 1. 演示了如何进行文件上传

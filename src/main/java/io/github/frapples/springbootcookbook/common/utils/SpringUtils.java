@@ -1,4 +1,4 @@
-package io.github.frapples.springbootcookbook.web.utils;
+package io.github.frapples.springbootcookbook.common.utils;
 
 import lombok.Getter;
 import org.springframework.beans.BeansException;
