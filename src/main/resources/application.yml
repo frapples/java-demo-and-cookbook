@@ -19,6 +19,7 @@ spring:
 
   datasource:
     driver-class-name: org.sqlite.JDBC
+    # url: jdbc:sqlite:D:/spring_boot_cookbook_sqlite.db # Windows
     url: jdbc:sqlite:${HOME}/spring_boot_cookbook_sqlite.db
     # driver-class-name: com.mysql.jdbc.Driver
     # url: jdbc:mysql://127.0.0.1:3306/dbname?useUnicode=true&characterEncoding=utf-8&useSSL=false

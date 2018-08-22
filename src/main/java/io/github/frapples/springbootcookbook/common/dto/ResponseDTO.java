@@ -1,5 +1,7 @@
 package io.github.frapples.springbootcookbook.common.dto;
 
+import io.github.frapples.springbootcookbook.common.exception.ErrorCode;
+import io.github.frapples.springbootcookbook.common.exception.ErrorCodeWrapperException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,18 +12,33 @@ import lombok.Getter;
 @Getter
 public class ResponseDTO<T> {
 
-    public static final int SUCCESS_CODE = 200;
-    public static final int FAILED_CODE = 500;
-
-    private Integer code;
+    private String code;
     private String msg;
+    private String description;
     private T data;
 
     public static <T> ResponseDTO<T> ofSuccess(T data) {
-        return new ResponseDTO<T>(SUCCESS_CODE, "执行成功", data);
+        ErrorCode errorCode = ErrorCode.SUCCESS;
+        return new ResponseDTO<T>(errorCode.getCode(), errorCode.getMessage(), "", data);
     }
 
-    public static <T> ResponseDTO<T> ofFailed() {
-        return new ResponseDTO<T>(FAILED_CODE, "系统错误", null);
+    public static <T> ResponseDTO<T> ofSystemError() {
+        return ofFail(ErrorCode.SYSTEM_ERROR);
+    }
+
+    public static <T> ResponseDTO<T> ofSystemError(String description) {
+        return ofFail(ErrorCode.SYSTEM_ERROR, description);
+    }
+
+    public static <T> ResponseDTO<T> ofFail(ErrorCode errorCode) {
+        return ofFail(errorCode, "");
+    }
+
+    public static <T> ResponseDTO<T> ofFail(ErrorCode errorCode, String description) {
+        return new ResponseDTO<T>(errorCode.getCode(), errorCode.getMessage(), description, null);
+    }
+
+    public static <T> ResponseDTO<T> ofErroCodeWrapperException(ErrorCodeWrapperException e) {
+        return ofFail(e.getErrorCode(), e.getDescription());
     }
 }

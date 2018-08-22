@@ -29,7 +29,7 @@ public class FileDemoController {
     public ResponseDTO upload(@RequestParam("file") MultipartFile file,
         @RequestParam("helloId") String helloId) {
         if (file.isEmpty()) {
-            return ResponseDTO.ofFailed();
+            return ResponseDTO.ofSystemError();
         }
 
         String fileName = file.getOriginalFilename();
@@ -47,7 +47,7 @@ public class FileDemoController {
             return ResponseDTO.ofSuccess(map);
         } catch (IOException e) {
             e.printStackTrace();
-            return ResponseDTO.ofFailed();
+            return ResponseDTO.ofSystemError();
         }
     }
 
