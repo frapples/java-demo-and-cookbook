@@ -33,32 +33,4 @@ public class HelloWorldController {
         return ResponseDTO.ofSuccess(map);
     }
 
-    @RequestMapping(value = "/test-errorcode", method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseDTO<Map<String, Object>> testErrorCode() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("a", "1");
-        map.put("b", "2");
-        throw new ErrorCodeWrapperException(ErrorCode.RECORD_EXISTS, "编号为XXX的记录已经存在");
-    }
-
-    /**
-     * 演示Controller异常处理，处理业务异常和系统异常
-     * @param e
-     * @return
-     */
-    @ExceptionHandler(Exception.class)
-    @ResponseBody
-    public ResponseDTO<?> exceptionHandler(Exception e) {
-        if (e instanceof ErrorCodeWrapperException) {
-            ErrorCodeWrapperException errCodeException = (ErrorCodeWrapperException) e;
-            if ((errCodeException.getErrorCode().equals(ErrorCode.SYSTEM_ERROR))) {
-                e.printStackTrace();
-            }
-            return ResponseDTO.ofErroCodeWrapperException(errCodeException);
-        } else {
-            e.printStackTrace();
-            return ResponseDTO.ofSystemError();
-        }
-    }
 }
