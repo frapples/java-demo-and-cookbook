@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.github.frapples.utilscookbook</groupId>
+  <artifactId>utils-cookbook</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <properties>
+    <!-- 此处定义的属性，后面即可引用 -->
+    <org.springframework.version>4.3.10.RELEASE</org.springframework.version>
+  </properties>
+
+  <build>
+    <!-- 当写java8代码时，idea提示设置为java8，即会插入此段代码 -->
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+
+  <dependencies>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <!-- https://projectlombok.org/ -->
+      <artifactId>lombok</artifactId>
+      <version>1.16.20</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <!-- https://github.com/google/guava -->
+      <artifactId>guava</artifactId>
+      <version>20.0</version>
+    </dependency>
+    <dependency>
+      <!-- 为java.lang中的类提供一系列工具类。https://github.com/apache/commons-lang -->
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.7</version>
+    </dependency>
+
+    <dependency>
+      <!-- apache commons io，提供了针对IO和文件的工具类。https://github.com/apache/commons-io -->
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.6</version>
+    </dependency>
+
+    <dependency>
+      <!-- 这里面某些示例依赖spring bean，如果项目本身就有spring bean可以去掉 -->
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+      <version>${org.springframework.version}</version>
+    </dependency>
+    <dependency>
+      <!-- spring validation 在此包中 -->
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${org.springframework.version}</version>
+    </dependency>
+    <dependency>
+      <!-- JSR303 -->
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <version>2.0.1.Final</version>
+    </dependency>
+    <dependency>
+      <!-- validation 需要具体的实现 -->
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>4.2.0.Final</version>
+    </dependency>
+
+    <dependency>
+      <!-- Apache HttpClient -->
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.2</version>
+    </dependency>
+
+    <dependency>
+      <!-- fastjson -->
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>1.2.46</version>
+    </dependency>
+
+  </dependencies>
+
+</project>
