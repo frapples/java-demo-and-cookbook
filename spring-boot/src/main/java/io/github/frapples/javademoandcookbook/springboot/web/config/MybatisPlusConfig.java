@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
 @Configuration
-@MapperScan("io.github.frapples.springbootcookbook.*")
+@MapperScan("io.github.frapples.javademoandcookbook.*")
 public class MybatisPlusConfig {
 
     @Bean
