@@ -1,4 +1,4 @@
-package io.github.frapples.utilscookbook.utils;
+package io.github.frapples.utilscookbook.utils.convert;
 
 import java.beans.PropertyDescriptor;
 import java.util.ArrayList;
@@ -27,23 +27,23 @@ public class ConvertUtils {
         return null;
     }
 
-    public static <T> List<T> convert(List source, Class<T> class_) {
+    public static <T> List<T> convert(List source, Class<T> clazz) {
         List<T> result = new ArrayList<>();
         if (source == null) {
             return result;
         }
         for (Object o : source) {
-            result.add(convert(o, class_));
+            result.add(convert(o, clazz));
         }
         return result;
     }
 
-    public static <T> T convertFromMap(Map map, Class<T> class_) {
+    public static <T> T convertFromMap(Map map, Class<T> clazz) {
         /* https://stackoverflow.com/questions/21720128/beanutils-converting-java-util-map-to-nested-bean */
         try {
-            T bean = class_.newInstance();
+            T bean = clazz.newInstance();
             BeanWrapper wrapper = PropertyAccessorFactory.forBeanPropertyAccess(bean);
-            //wrapper.setPropertyValues(map);
+            // wrapper.setPropertyValues(map);
             wrapper.setPropertyValues((PropertyValues)new MutablePropertyValues(map), true, true);
             return bean;
         } catch (InstantiationException | IllegalAccessException e) {
