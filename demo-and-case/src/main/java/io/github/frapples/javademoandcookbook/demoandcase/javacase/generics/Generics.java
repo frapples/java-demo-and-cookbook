@@ -1,4 +1,4 @@
-package io.github.frapples.javademoandcookbook.demoandcase.demo.generics;
+package io.github.frapples.javademoandcookbook.demoandcase.javacase.generics;
 
 
 public class Generics {

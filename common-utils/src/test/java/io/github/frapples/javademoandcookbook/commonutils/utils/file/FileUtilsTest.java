@@ -20,7 +20,6 @@ class FileUtilsTest {
         try {
             String context = FileUtils.readCalssPathFile("files/customerFile.txt");
             log.info(context);
-            System.out.println();
         } catch (IOException e) {
             log.info("", e);
         }
