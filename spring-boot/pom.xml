@@ -41,6 +41,13 @@
     </dependency>
 
     <dependency>
+      <!-- 单元测试 -->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.projectlombok</groupId>
       <!-- https://projectlombok.org/ -->
       <artifactId>lombok</artifactId>
