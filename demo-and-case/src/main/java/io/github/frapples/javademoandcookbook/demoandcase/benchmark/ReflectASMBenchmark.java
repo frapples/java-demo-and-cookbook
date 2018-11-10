@@ -30,7 +30,7 @@ import org.openjdk.jmh.runner.options.TimeValue;
  * @date 18-11-6
  */
 
-@BenchmarkMode(Mode.AverageTime)
+@BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 @State(Scope.Thread)
 public class ReflectASMBenchmark {
@@ -45,6 +45,9 @@ public class ReflectASMBenchmark {
     private Method mSetter;
     private Method mGetter;
 
+    private int getterIndex;
+    private int setterIndex;
+
     @Setup
     public void init() throws NoSuchMethodException, IllegalAccessException {
         p = new Point();
@@ -58,6 +61,9 @@ public class ReflectASMBenchmark {
 
         mSetter = Point.class.getMethod("setX", Integer.class);
         mGetter = Point.class.getMethod("getX");
+
+        getterIndex = access.getIndex("getX");
+        setterIndex = access.getIndex("getX");
     }
 
 
@@ -68,7 +74,7 @@ public class ReflectASMBenchmark {
     }
 
     @Benchmark
-    public void reflectAsmIndexWithOriginGet() {
+    public void reflectAsmStringIndexWithOriginGet() {
         MethodAccess access = MethodAccess.get(Point.class);
         int getterIndex = access.getIndex("getX");
         access.invoke(p, getterIndex);
@@ -76,6 +82,12 @@ public class ReflectASMBenchmark {
         access.invoke(p, setterIndex);
     }
 
+
+    @Benchmark
+    public void reflectAsmIndexWithCacheGet() {
+        access.invoke(p, getterIndex);
+        access.invoke(p, setterIndex);
+    }
     @Benchmark
     public void reflectAsmWithCacheGet() {
         MethodAccess access = methodAccessGet(Point.class);
