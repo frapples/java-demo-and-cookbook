@@ -19,13 +19,19 @@ spring:
 
   datasource:
     driver-class-name: org.sqlite.JDBC
-    # url: jdbc:sqlite:D:/spring_boot_cookbook_sqlite.db # Windows
-    url: jdbc:sqlite:${HOME}/spring_boot_cookbook_sqlite.db
+    url: jdbc:sqlite:D:/spring_boot_cookbook_sqlite.db # Windows
+    # url: jdbc:sqlite:${HOME}/spring_boot_cookbook_sqlite.db
     # driver-class-name: com.mysql.jdbc.Driver
     # url: jdbc:mysql://127.0.0.1:3306/dbname?useUnicode=true&characterEncoding=utf-8&useSSL=false
     # username: test
-    # password: 123456
+    # password:
 
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
 
   logging:
     level:
@@ -59,5 +65,11 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
 
+mq:
+  bizqueue:
+    demobiz:
+      queue-name: demoqueue
+      exchange-name: demoexchange
+      route-key: demoroutekey
 
 
