@@ -1,8 +1,10 @@
 package io.github.frapples.javademoandcookbook.commonutils.utils.functional;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -29,4 +31,13 @@ public class StreamUtils {
     }
 
 
+    public static <T> Stream<T> asStream(Iterable<T> iterable) {
+        return asStream(iterable.iterator());
+    }
+
+    public static <T> Stream<T> asStream(Iterator<T> sourceIterator) {
+        // Thanks for https://stackoverflow.com/questions/24511052/how-to-convert-an-iterator-to-a-stream
+        Iterable<T> iterable = () -> sourceIterator;
+        return StreamSupport.stream(iterable.spliterator(), false);
+    }
 }

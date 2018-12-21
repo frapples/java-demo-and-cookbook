@@ -5,11 +5,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
 
 /**
  * @author Frapples <isfrapples@outlook.com>
@@ -27,7 +28,7 @@ public class BeanUtils {
     private BeanUtils() {
     }
 
-    public static String getterToFiledName(String getterName) {
+    public static String getterNameToFieldName(String getterName) {
         if (getterName == null) {
             return null;
         }
@@ -41,14 +42,40 @@ public class BeanUtils {
 
     }
 
+    public static String fieldNameToGetterName(String filedName) {
+        if (filedName == null || filedName.isEmpty()) {
+            return "";
+        } else {
+            return "get" + filedName.substring(0, 1).toUpperCase() + filedName.substring(1);
+        }
+    }
+
+    public static String fieldNameToSetterName(String filedName) {
+        if (filedName == null || filedName.isEmpty()) {
+            return "";
+        } else {
+            return "set" + filedName.substring(0, 1).toUpperCase() + filedName.substring(1);
+        }
+    }
+
+    public static Method fieldToGetter(Field field) throws NoSuchMethodException {
+        String getterName = fieldNameToGetterName(field.getName());
+        return field.getDeclaringClass().getMethod(getterName);
+    }
+
+    public static Method fieldToSetter(Field field) throws NoSuchMethodException {
+        String getterName = fieldNameToSetterName(field.getName());
+        return field.getDeclaringClass().getMethod(getterName, field.getType());
+    }
+
     /**
      * 通过java反射获取一个字段的值
      */
-    public static Object getField(Object object, String filed) {
-        String getterName = "get" + StringUtils.capitalize(filed);
+    public static <T> T fieldGet(Object object, String filedName, Class<T> fieldType) {
+        String getterName = fieldNameToGetterName(filedName);
         try {
             Method getter = object.getClass().getMethod(getterName);
-            return getter.invoke(object);
+            return (T)getter.invoke(object);
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new ReflectionException(e);
         }
@@ -57,34 +84,50 @@ public class BeanUtils {
     /**
      * 通过java反射设置一个字段的值
      */
-    public static void setField(Object object, String filed, Object value) {
-        String setterName = "set" + StringUtils.capitalize(filed);
+    public static <T> void fieldSet(Object object, String field, Class<T> fieldType, T value) {
+        String setterName = fieldNameToSetterName(field);
         try {
-            Method setter = object.getClass().getMethod(setterName);
+            Method setter = object.getClass().getMethod(setterName, fieldType);
             setter.invoke(object, value);
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new ReflectionException(e);
         }
     }
 
+    public static List<Field> getFieldsListWithAnnotation(Class<?> cls, Class<? extends Annotation> annotationCls) {
+        return FieldUtils.getFieldsListWithAnnotation(cls, annotationCls);
+    }
+
+    public static List<Field> getAllFieldsList(Class<?> clazz) {
+        return FieldUtils.getAllFieldsList(clazz);
+    }
+
     /**
-     * 获取bean的所有字段，包括父类字段
-     * @param clazz
-     * @return
+     * 获取bean的所有成员变量定义。
+     * 如果继承链上有同名成员变量，顺序是：以子类靠前，父类靠后的顺序。
      */
-    public static List<Field> allFields(Class<?> clazz) {
-        HashMap<String, Field> fields = new HashMap<>();
-        while (clazz != null) {
-            Arrays.stream(clazz.getDeclaredFields()).forEach(f -> fields.putIfAbsent(f.getName(), f));
-            clazz = clazz.getSuperclass();
+    public static Map<String, List<Field>> getAllFields(Class<?> clazz) {
+        Map<String, List<Field>> allFields = new HashMap<>();
+        for (Class<?> c = clazz; c!= null; c = c.getSuperclass()) {
+            for (Field f : c.getDeclaredFields()) {
+                List<Field> fields = allFields.getOrDefault(f.getName(), new ArrayList<>());
+                fields.add(f);
+                allFields.put(f.getName(), fields);
+            }
         }
-        return new ArrayList<>(fields.values());
+        return allFields;
     }
 
-    public static List<Field> fieldsWithAnnotation(Class<?> clazz, Class<? extends Annotation> annotation) {
-        List<Field> fields = allFields(clazz);
-        fields.removeIf(field -> !field.isAnnotationPresent(annotation));
-        return fields;
+    /**
+     * 获取bean的所有成员变量中，被指定注解修饰的成员变量定义。
+     * 如果继承链上有同名成员变量，顺序是：以子类靠前，父类靠后的顺序。
+     */
+    public static Map<String, List<Field>> getAllFieldsWithAnnotation(Class<?> clazz, Class<? extends Annotation> annotation) {
+        Map<String, List<Field>> allFields = getAllFields(clazz);
+        for (List<Field> fields : allFields.values()) {
+            fields.removeIf(field -> !field.isAnnotationPresent(annotation));
+        }
+        allFields.values().removeIf(List::isEmpty);
+        return allFields;
     }
-
 }
