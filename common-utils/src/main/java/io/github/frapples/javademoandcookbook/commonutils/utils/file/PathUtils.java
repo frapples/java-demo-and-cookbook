@@ -1,5 +1,8 @@
 package io.github.frapples.javademoandcookbook.commonutils.utils.file;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Frapples <isfrapples@outlook.com>
  * @date 2018/9/18
@@ -7,8 +10,10 @@ package io.github.frapples.javademoandcookbook.commonutils.utils.file;
 public class PathUtils {
 
     public static final char SEP = System.getProperty("file.separator").charAt(0);
+    private static final List<Character> allSep = Arrays.asList('/', '\\', SEP);
 
-    public static String join(String... seg) {
+
+    static String pathJoin(String... seg) {
         if (seg == null || seg.length == 0) {
             return "";
         }
@@ -16,16 +21,19 @@ public class PathUtils {
         StringBuilder path = new StringBuilder();
         for (int i = 0; i < seg.length; i++) {
             String s = seg[i];
-            path.append(s);
-
-            if (s.length() > 0 && i != seg.length - 1) {
-                char end = s.charAt(s.length() - 1);
-                if (!(end == '/' || end == SEP)) {
-                    path.append(SEP);
+            if (s.length() > 0) {
+                int first = 0;
+                int end = s.length() - 1;
+                if (allSep.contains(s.charAt(first))) {
+                    first++;
                 }
+                if (allSep.contains(s.charAt(end))) {
+                    end--;
+                }
+                path.append(s, first, end + 1);
+                path.append(SEP);
             }
         }
         return path.toString();
     }
-
 }
