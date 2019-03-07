@@ -1,6 +1,6 @@
 package io.github.frapples.javademoandcookbook.springboot.web.exceptionhandler;
 
-import io.github.frapples.javademoandcookbook.springboot.common.dto.ResponseDTO;
+import io.github.frapples.javademoandcookbook.springboot.common.vo.ResponseVo;
 import io.github.frapples.javademoandcookbook.springboot.common.exception.ErrorCode;
 import io.github.frapples.javademoandcookbook.springboot.common.exception.ErrorCodeWrapperException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,16 +22,16 @@ public class ExceptionAdvice {
      */
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public ResponseDTO<?> exceptionHandler(Exception e) {
+    public ResponseVo<?> exceptionHandler(Exception e) {
         if (e instanceof ErrorCodeWrapperException) {
             ErrorCodeWrapperException errCodeException = (ErrorCodeWrapperException) e;
             if ((errCodeException.getErrorCode().equals(ErrorCode.SYSTEM_ERROR))) {
                 e.printStackTrace();
             }
-            return ResponseDTO.ofErroCodeWrapperException(errCodeException);
+            return ResponseVo.ofErroCodeWrapperException(errCodeException);
         } else {
             e.printStackTrace();
-            return ResponseDTO.ofSystemError();
+            return ResponseVo.ofSystemError();
         }
     }
 }

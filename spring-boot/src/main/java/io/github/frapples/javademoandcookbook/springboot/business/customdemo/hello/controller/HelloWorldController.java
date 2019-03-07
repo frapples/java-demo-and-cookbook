@@ -1,9 +1,9 @@
-package io.github.frapples.javademoandcookbook.springboot.hello.controller;
+package io.github.frapples.javademoandcookbook.springboot.business.customdemo.hello.controller;
 
 
-import io.github.frapples.javademoandcookbook.springboot.hello.entity.dto.PersonOutputDTO;
-import io.github.frapples.javademoandcookbook.springboot.hello.service.HelloWorldService;
-import io.github.frapples.javademoandcookbook.springboot.common.dto.ResponseDTO;
+import io.github.frapples.javademoandcookbook.springboot.business.customdemo.hello.entity.dto.PersonVo;
+import io.github.frapples.javademoandcookbook.springboot.business.customdemo.hello.service.HelloWorldService;
+import io.github.frapples.javademoandcookbook.springboot.common.vo.ResponseVo;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,13 +22,13 @@ public class HelloWorldController {
 
     @RequestMapping(value = "/world", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseDTO<Map<String, Object>> hello() {
-        List<PersonOutputDTO> persons = helloWorldService.hello();
+    public ResponseVo<Map<String, Object>> hello() {
+        List<PersonVo> persons = helloWorldService.hello();
         Map<String, Object> map = new HashMap<>();
         map.put("a", "1");
         map.put("b", "2");
         map.put("persons", persons);
-        return ResponseDTO.ofSuccess(map);
+        return ResponseVo.ofSuccess(map);
     }
 
 }

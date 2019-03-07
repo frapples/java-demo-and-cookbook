@@ -1,6 +1,6 @@
-package io.github.frapples.javademoandcookbook.springboot.customdemo;
+package io.github.frapples.javademoandcookbook.springboot.business.customdemo;
 
-import io.github.frapples.javademoandcookbook.springboot.common.dto.ResponseDTO;
+import io.github.frapples.javademoandcookbook.springboot.common.vo.ResponseVo;
 import io.github.frapples.javademoandcookbook.springboot.common.exception.ErrorCode;
 import io.github.frapples.javademoandcookbook.springboot.common.exception.ErrorCodeWrapperException;
 import io.github.frapples.javademoandcookbook.springboot.web.exceptionhandler.GlobalExceptionHandlerMixin;
@@ -22,7 +22,7 @@ public class GlobalExceptionHandlerDemoController implements GlobalExceptionHand
 
     @RequestMapping(value = "/test-errorcode", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseDTO<Map<String, Object>> testErrorCode() {
+    public ResponseVo<Map<String, Object>> testErrorCode() {
         Map<String, Object> map = new HashMap<>();
         map.put("a", "1");
         map.put("b", "2");

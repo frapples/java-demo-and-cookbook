@@ -1,6 +1,6 @@
-package io.github.frapples.javademoandcookbook.springboot.customdemo;
+package io.github.frapples.javademoandcookbook.springboot.business.customdemo;
 
-import io.github.frapples.javademoandcookbook.springboot.common.dto.ResponseDTO;
+import io.github.frapples.javademoandcookbook.springboot.common.vo.ResponseVo;
 import io.github.frapples.javademoandcookbook.springboot.common.exception.ErrorCode;
 import io.github.frapples.javademoandcookbook.springboot.common.exception.ErrorCodeWrapperException;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ public class LocalExceptionHandlerDemoController {
 
     @RequestMapping(value = "/test-errorcode", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseDTO<Map<String, Object>> testErrorCode() {
+    public ResponseVo<Map<String, Object>> testErrorCode() {
         Map<String, Object> map = new HashMap<>();
         map.put("a", "1");
         map.put("b", "2");
@@ -34,16 +34,16 @@ public class LocalExceptionHandlerDemoController {
      */
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public ResponseDTO<?> exceptionHandler(Exception e) {
+    public ResponseVo<?> exceptionHandler(Exception e) {
         if (e instanceof ErrorCodeWrapperException) {
             ErrorCodeWrapperException errCodeException = (ErrorCodeWrapperException) e;
             if ((errCodeException.getErrorCode().equals(ErrorCode.SYSTEM_ERROR))) {
                 e.printStackTrace();
             }
-            return ResponseDTO.ofErroCodeWrapperException(errCodeException);
+            return ResponseVo.ofErroCodeWrapperException(errCodeException);
         } else {
             e.printStackTrace();
-            return ResponseDTO.ofSystemError();
+            return ResponseVo.ofSystemError();
         }
     }
 

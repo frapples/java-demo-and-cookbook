@@ -1,6 +1,6 @@
-package io.github.frapples.javademoandcookbook.springboot.filedemo;
+package io.github.frapples.javademoandcookbook.springboot.business.filedemo;
 
-import io.github.frapples.javademoandcookbook.springboot.common.dto.ResponseDTO;
+import io.github.frapples.javademoandcookbook.springboot.common.vo.ResponseVo;
 import io.github.frapples.javademoandcookbook.springboot.web.resolver.UserId;
 import java.io.File;
 import java.io.IOException;
@@ -26,10 +26,10 @@ public class FileDemoController {
      * */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseDTO upload(@RequestParam("file") MultipartFile file,
+    public ResponseVo upload(@RequestParam("file") MultipartFile file,
         @RequestParam("helloId") String helloId) {
         if (file.isEmpty()) {
-            return ResponseDTO.ofSystemError();
+            return ResponseVo.ofSystemError();
         }
 
         String fileName = file.getOriginalFilename();
@@ -44,10 +44,10 @@ public class FileDemoController {
             Map<String, Object> map = new HashMap<>();
             map.put("fileName", fileName);
             map.put("ext", ext);
-            return ResponseDTO.ofSuccess(map);
+            return ResponseVo.ofSuccess(map);
         } catch (IOException e) {
             e.printStackTrace();
-            return ResponseDTO.ofSystemError();
+            return ResponseVo.ofSystemError();
         }
     }
 
@@ -72,7 +72,7 @@ public class FileDemoController {
      * */
     @RequestMapping(value = "/arg", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseDTO customerArgResolver(@UserId String userId) {
-        return ResponseDTO.ofSuccess(userId);
+    public ResponseVo customerArgResolver(@UserId String userId) {
+        return ResponseVo.ofSuccess(userId);
     }
 }
