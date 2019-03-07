@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/api/hello")
 public class HelloWorldController {
 
+    private final HelloWorldService helloWorldService;
+
     @Autowired
-    private HelloWorldService helloWorldService;
+    public HelloWorldController(HelloWorldService helloWorldService) {
+        this.helloWorldService = helloWorldService;
+    }
 
     @RequestMapping(value = "/world", method = RequestMethod.GET)
     @ResponseBody

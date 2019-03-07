@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class EnvironmentalConfig {
     @Getter
-    @Value("${spring.application.environment}")
+    @Value("${spring.profiles.active}")
     private String environment;
 }

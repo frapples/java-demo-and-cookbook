@@ -6,10 +6,13 @@ server:
       secure: true
     timeout: 1800
 spring:
+  profiles:
+    active: test
   application:
     name: hello
-    environment: test
-    version: 1.0.0
+  aop:
+    # 由于Service等Bean为防止冗余没有使用接口，因此需要用cglib启用AOP
+    proxy-target-class: true
   http:
     encoding:
       force: true
@@ -17,9 +20,13 @@ spring:
       resolve-lazily: true
       max-file-size: 5MB
 
+  autoconfigure:
+    # 关闭rabbit模块的加载
+    exclude: org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
+
   datasource:
-    driver-class-name: org.sqlite.JDBC
-    url: jdbc:sqlite:D:/spring_boot_cookbook_sqlite.db # Windows
+    # driver-class-name: org.sqlite.JDBC
+    # url: jdbc:sqlite:D:/spring_boot_cookbook_sqlite.db # Windows
     # url: jdbc:sqlite:${HOME}/spring_boot_cookbook_sqlite.db
     # driver-class-name: com.mysql.jdbc.Driver
     # url: jdbc:mysql://127.0.0.1:3306/dbname?useUnicode=true&characterEncoding=utf-8&useSSL=false
@@ -57,7 +64,7 @@ mybatis-plus:
     #逻辑删除配置（下面3个配置）
     logic-delete-value: 1
     logic-not-delete-value: 0
-    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+    # sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
     #自定义填充策略接口实现
     # meta-object-handler: com.baomidou.springboot.MyMetaObjectHandler
   configuration:

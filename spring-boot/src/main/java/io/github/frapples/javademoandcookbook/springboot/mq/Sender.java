@@ -3,6 +3,7 @@ package io.github.frapples.javademoandcookbook.springboot.mq;
 import com.alibaba.fastjson.JSON;
 import java.util.HashMap;
 import java.util.Map;
+import javax.annotation.Resource;
 import lombok.SneakyThrows;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Sender {
 
-    @Autowired
+    @Autowired(required = false)
     private AmqpTemplate amqpTemplate;
 
     @SneakyThrows

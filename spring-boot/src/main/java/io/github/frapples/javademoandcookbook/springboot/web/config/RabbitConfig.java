@@ -1,5 +1,6 @@
 package io.github.frapples.javademoandcookbook.springboot.web.config;
 
+import javax.annotation.Resource;
 import lombok.Data;
 import lombok.SneakyThrows;
 import org.springframework.amqp.core.BindingBuilder;
@@ -11,11 +12,9 @@ import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 /**
@@ -23,10 +22,10 @@ import org.springframework.core.env.Environment;
  * @date 2018/10/26
  */
 
-@Configuration
+// @Configuration
 public class RabbitConfig {
 
-    @Autowired
+    @Resource
     private Environment env;
 
 
