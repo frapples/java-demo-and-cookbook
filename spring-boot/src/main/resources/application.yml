@@ -25,6 +25,10 @@ spring:
     exclude: org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
 
   datasource:
+    # h2配置：https://juejin.im/post/5ab4b339f265da238c3a9d0a
+    url: jdbc:h2:mem:h2test
+    driver-class-name: org.h2.Driver
+    schema: classpath:db/schema.sql
     # driver-class-name: org.sqlite.JDBC
     # url: jdbc:sqlite:D:/spring_boot_cookbook_sqlite.db # Windows
     # url: jdbc:sqlite:${HOME}/spring_boot_cookbook_sqlite.db

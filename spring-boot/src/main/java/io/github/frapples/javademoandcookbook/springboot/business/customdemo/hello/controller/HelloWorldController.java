@@ -4,9 +4,7 @@ package io.github.frapples.javademoandcookbook.springboot.business.customdemo.he
 import io.github.frapples.javademoandcookbook.springboot.business.customdemo.hello.entity.dto.PersonVo;
 import io.github.frapples.javademoandcookbook.springboot.business.customdemo.hello.service.HelloWorldService;
 import io.github.frapples.javademoandcookbook.springboot.common.vo.ResponseVo;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,13 +24,9 @@ public class HelloWorldController {
 
     @RequestMapping(value = "/world", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseVo<Map<String, Object>> hello() {
+    public ResponseVo hello() {
         List<PersonVo> persons = helloWorldService.hello();
-        Map<String, Object> map = new HashMap<>();
-        map.put("a", "1");
-        map.put("b", "2");
-        map.put("persons", persons);
-        return ResponseVo.ofSuccess(map);
+        return ResponseVo.ofSuccess(persons);
     }
 
 }
