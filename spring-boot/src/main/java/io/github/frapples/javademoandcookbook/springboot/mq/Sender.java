@@ -15,8 +15,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class Sender {
 
-    @Autowired(required = false)
-    private AmqpTemplate amqpTemplate;
+    private final AmqpTemplate amqpTemplate;
+
+    @Autowired
+    public Sender(AmqpTemplate amqpTemplate) {
+        this.amqpTemplate = amqpTemplate;
+    }
 
     @SneakyThrows
     public void send() {
