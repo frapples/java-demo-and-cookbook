@@ -3,10 +3,21 @@ package io.github.frapples.javademoandcookbook.springboot.common.utils.mybatispl
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Assert;
+import com.baomidou.mybatisplus.core.toolkit.ExceptionUtils;
+import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.core.toolkit.support.ColumnCache;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import com.baomidou.mybatisplus.core.toolkit.support.SerializedLambda;
 import com.google.common.base.CaseFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import org.apache.commons.lang3.time.DateUtils;
 
 /**
@@ -26,6 +37,16 @@ public class QueryUtils {
 
     public static String column(Class<?> tableEntity, String column) {
         return column(tableEntity.getAnnotation(TableName.class).value(), column);
+    }
+
+    public static <T> String column(Class<?> tableEntity, SFunction<T, ?> column) {
+        return column(tableEntity, columnToString(column));
+    }
+
+    public static <T> String column(SFunction<T, ?> column) {
+        SerializedLambda lambda = LambdaUtils.resolve(column);
+        String col = getColumn(lambda, true);
+        return column(lambda.getImplClass(), col);
     }
 
     public static <T> LambdaQueryWrapper<T> falseQueryWrapper() {
@@ -72,5 +93,24 @@ public class QueryUtils {
             query = query.lt(field, toDate);
         }
         return query;
+    }
+
+    public static <T> String columnToString(SFunction<T, ?> column) {
+        return columnToString(column, true);
+    }
+
+    public static <T> String columnToString(SFunction<T, ?> column, boolean onlyColumn) {
+        return getColumn(LambdaUtils.resolve(column), onlyColumn);
+    }
+
+    private static String getColumn(SerializedLambda lambda, boolean onlyColumn) {
+        String fieldName = StringUtils.resolveFieldName(lambda.getImplMethodName());
+        String entityClassName = lambda.getImplClassName();
+        Map<String, ColumnCache> columnMap = LambdaUtils.getColumnMap(entityClassName);
+        Assert.notEmpty(columnMap, "cannot find column's cache for \"%s\", so you cannot used \"%s\"!",
+            entityClassName, lambda.getImplClassName());
+        return Optional.ofNullable(columnMap.get(fieldName.toUpperCase(Locale.ENGLISH)))
+            .map(onlyColumn ? ColumnCache::getColumn : ColumnCache::getColumnSelect)
+            .orElseThrow(() -> ExceptionUtils.mpe("your property named \"%s\" cannot find the corresponding database column name!", fieldName));
     }
 }
