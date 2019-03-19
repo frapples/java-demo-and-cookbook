@@ -21,9 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/filedemo")
 public class FileDemoController {
 
-    /*
+    /**
      * 1. 演示了如何进行文件上传
-     * */
+     */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
     public ResponseVo upload(@RequestParam("file") MultipartFile file,
@@ -51,10 +51,10 @@ public class FileDemoController {
         }
     }
 
-    /*
+    /**
     * 1. 演示了如何文件下载。 参考：https://stackoverflow.com/questions/5673260/downloading-a-file-from-spring-controllers
     * 2. 返回值类型也可以使用byte[]，但是很显然，文件太大时，这种方式需要把文件的所有内容载入内存
-    * */
+    */
     @RequestMapping(path = "/download", method = RequestMethod.GET)
     @ResponseBody
     public Resource download(HttpServletResponse response) {
@@ -63,13 +63,13 @@ public class FileDemoController {
 
         ByteArrayResource resource = new ByteArrayResource(s.getBytes());
         response.setContentType(MediaType.TEXT_PLAIN_VALUE);
-        response.setHeader("Content-Disposition", "attachment; filename=" + filename);
+        response.setHeader("Content-Disposition", "attachment" + filename);
         return resource;
     }
 
-    /*
+    /**
      * 1. 演示了使用自定义参数解析器@UserId
-     * */
+     */
     @RequestMapping(value = "/arg", method = RequestMethod.POST)
     @ResponseBody
     public ResponseVo customerArgResolver(@UserId String userId) {

@@ -1,6 +1,7 @@
 package io.github.frapples.javademoandcookbook.springboot.common.tools;
 
 import java.util.concurrent.locks.Lock;
+import java.util.function.Supplier;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -48,6 +49,18 @@ public class DistributedToolService {
         }
     }
 
+    public <T> T withTransaction(TransactionDefinition transactionDefinition, Supplier<T> supplier) {
+        TransactionStatus transStatus = platformTransactionManager.getTransaction(transactionDefinition);
+        try {
+            T v = supplier.get();
+            platformTransactionManager.commit(transStatus);
+            return v;
+        } catch (Exception e) {
+            platformTransactionManager.rollback(transStatus);
+            throw e;
+        }
+    }
+
     public void withTransaction(Propagation propagation, Isolation isolation, Runnable runnable) {
         DefaultTransactionDefinition transDefinition = new DefaultTransactionDefinition();
         transDefinition.setPropagationBehavior(propagation.value());
@@ -64,6 +77,44 @@ public class DistributedToolService {
     public void withTransaction(Runnable runnable) {
         DefaultTransactionDefinition transDefinition = new DefaultTransactionDefinition();
         withTransaction(transDefinition, runnable);
+    }
+
+
+    public WithTransaction withTransaction() {
+        return new WithTransaction();
+    }
+
+    public class WithTransaction {
+
+        DefaultTransactionDefinition transDefinition = new DefaultTransactionDefinition();
+
+        WithTransaction propagation(Propagation propagation) {
+            transDefinition.setPropagationBehavior(propagation.value());
+            return this;
+        }
+
+        WithTransaction isolation(Isolation isolation) {
+            transDefinition.setIsolationLevel(isolation.value());
+            return this;
+        }
+
+        WithTransaction timeout(int timeout) {
+            transDefinition.setTimeout(timeout);
+            return this;
+        }
+
+        WithTransaction readOnly(boolean readOnly) {
+            transDefinition.setReadOnly(readOnly);
+            return this;
+        }
+
+        void then(Runnable runnable) {
+            withTransaction(transDefinition, runnable);
+        }
+
+        <T> T then(Supplier<T> supplier) {
+            return withTransaction(transDefinition, supplier);
+        }
     }
 
     public Lock newDistributedLock(String name) {
