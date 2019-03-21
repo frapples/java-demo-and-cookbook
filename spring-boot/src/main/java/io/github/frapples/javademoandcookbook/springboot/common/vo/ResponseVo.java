@@ -38,7 +38,7 @@ public class ResponseVo<T> {
         return new ResponseVo<T>(errorCode.getCode(), errorCode.getMessage(), description, null);
     }
 
-    public static <T> ResponseVo<T> ofErroCodeWrapperException(ErrorCodeWrapperException e) {
+    public static <T> ResponseVo<T> ofErrorCodeWrapperException(ErrorCodeWrapperException e) {
         return ofFail(e.getErrorCode(), e.getDescription());
     }
 }

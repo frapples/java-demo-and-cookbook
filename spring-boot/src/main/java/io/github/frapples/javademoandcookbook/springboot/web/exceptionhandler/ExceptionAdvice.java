@@ -28,7 +28,7 @@ public class ExceptionAdvice {
             if ((errCodeException.getErrorCode().equals(ErrorCode.SYSTEM_ERROR))) {
                 e.printStackTrace();
             }
-            return ResponseVo.ofErroCodeWrapperException(errCodeException);
+            return ResponseVo.ofErrorCodeWrapperException(errCodeException);
         } else {
             e.printStackTrace();
             return ResponseVo.ofSystemError();

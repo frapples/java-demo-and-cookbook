@@ -22,9 +22,6 @@ public class Receiver implements RabbitReceiver<Map<String, Object>> {
     }
 
 
-    public static class CustomMap extends HashMap<String, Object> {
-    }
-
     @Override
     public <T extends Map<String, Object>> void process(T entity) {
         System.out.println(entity.toString());
