@@ -6,6 +6,8 @@ import java.util.List;
 /**
  * @author Frapples <isfrapples@outlook.com>
  * @date 2018/9/18
+ *
+ * @see org.apache.commons.io.FilenameUtils 提供了文件路径操作的工具。
  */
 public class PathUtils {
 

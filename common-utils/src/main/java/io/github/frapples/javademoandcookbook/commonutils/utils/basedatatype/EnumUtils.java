@@ -1,4 +1,4 @@
-package io.github.frapples.javademoandcookbook.commonutils.utils.collection;
+package io.github.frapples.javademoandcookbook.commonutils.utils.basedatatype;
 
 import java.util.Objects;
 import java.util.Optional;

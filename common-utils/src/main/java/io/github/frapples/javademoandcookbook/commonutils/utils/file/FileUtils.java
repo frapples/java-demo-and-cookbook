@@ -6,6 +6,11 @@ import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.ClassPathResource;
 
+/**
+ * @see org.apache.commons.io.FileUtils 提供了文件操作的工具
+ * @see IOUtils 提供了IO流操作的工具类
+ * @
+ */
 public class FileUtils {
 
     /**

@@ -1,20 +1,37 @@
-package io.github.frapples.javademoandcookbook.commonutils.utils.convert;
+package io.github.frapples.javademoandcookbook.commonutils.utils.bean;
 
+import com.google.common.base.Preconditions;
+import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import lombok.Builder;
+import lombok.SneakyThrows;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.MutablePropertyValues;
+import org.springframework.beans.PropertyAccessorFactory;
+import org.springframework.cglib.beans.BeanCopier;
+import org.springframework.cglib.beans.BeanMap;
 
 /**
  * @author Frapples <isfrapples@outlook.com>
  * @date 2018/12/3
+ *
+ * Bean相关的操作工具类、反射工具类一览：
+ * @see FieldUtils
+ * @see org.springframework.beans.BeanUtils
  */
 public class BeanUtils {
 
@@ -71,6 +88,7 @@ public class BeanUtils {
     /**
      * 通过java反射获取一个字段的值
      */
+    @SuppressWarnings("unchecked")
     public static <T> T fieldGet(Object object, String filedName, Class<T> fieldType) {
         String getterName = fieldNameToGetterName(filedName);
         try {
@@ -130,4 +148,102 @@ public class BeanUtils {
         allFields.values().removeIf(List::isEmpty);
         return allFields;
     }
+
+    public static ReflectType reflectType = ReflectType.CGLIB;
+
+
+    @SneakyThrows
+    public static <T> T copyBean(Object source, Class<T> targetClass) {
+        Preconditions.checkNotNull(source, "Source must not be null");
+        T target = targetClass.newInstance();
+        return copyBean(source, target);
+    }
+
+    /**
+     * 复制Bean对象。只复制两个对象中具有相同名称与类型的属性。
+     */
+    public static <T> T copyBean(Object source, T target) {
+        Preconditions.checkNotNull(source, "Source must not be null");
+        Preconditions.checkNotNull(target, "Target must not be null");
+
+        if (Objects.equals(reflectType, ReflectType.JAVA)) {
+            BeanCopier beanCopier = BeanCopier.create(source.getClass(), target.getClass(), false);
+            beanCopier.copy(source, target, null);
+        } else {
+            org.springframework.beans.BeanUtils.copyProperties(source, target);
+        }
+        return target;
+    }
+
+    public static <T> List<T> copyBean(List<?> source, Class<T> clazz) {
+        source = ObjectUtils.defaultIfNull(source, Collections.emptyList());
+        return source.stream().map(o -> copyBean(o, clazz)).collect(Collectors.toList());
+    }
+
+    @SneakyThrows
+    public static <T> T mapToBean(Map<String, Object> map, Class<T> clazz) {
+        /* https://stackoverflow.com/questions/21720128/beanutils-converting-java-util-map-to-nested-bean */
+            T bean = clazz.newInstance();
+            return mapToBean(map, bean);
+    }
+
+    public static <T> T mapToBean(Map<String, Object> map, T bean) {
+        if (Objects.equals(reflectType, ReflectType.JAVA)) {
+            BeanWrapper wrapper = PropertyAccessorFactory.forBeanPropertyAccess(bean);
+            wrapper.setPropertyValues(new MutablePropertyValues(map), true, true);
+        } else {
+            BeanMap.create(bean).putAll(map);
+        }
+        return bean;
+    }
+
+
+    public enum ReflectType {
+        JAVA,
+        CGLIB;
+    }
+
+    @Builder(builderMethodName = "beanToMapHelper", buildMethodName = "beanToMap", builderClassName = "BeanToMapBuilder")
+    public static Map<String, Object> beanToMap(Object bean, Boolean filterNull, ReflectType reflectType) {
+        filterNull = ObjectUtils.defaultIfNull(filterNull, true);
+        reflectType = ObjectUtils.defaultIfNull(reflectType,ReflectType.CGLIB);
+
+        Map<String, Object> map;
+        if (Objects.equals(reflectType, ReflectType.JAVA)) {
+            map = beanToMapJavaImpl(bean);
+
+        } else if (Objects.equals(reflectType, ReflectType.CGLIB)) {
+            map = beanToMapCglibImpl(bean);
+        } else {
+            throw new IllegalArgumentException();
+
+        }
+
+        if (filterNull) {
+            map.entrySet().removeIf(entry -> entry.getValue() == null);
+        }
+        return map;
+    }
+
+    private static Map<String, Object> beanToMapJavaImpl(Object bean) {
+        BeanWrapper wrapper = PropertyAccessorFactory.forBeanPropertyAccess(bean);
+        PropertyDescriptor[] descriptors = wrapper.getPropertyDescriptors();
+        Map<String, Object> map = new HashMap<>(descriptors.length);
+        for (PropertyDescriptor descriptor : descriptors) {
+            String name = descriptor.getName();
+            map.put(name, wrapper.getPropertyValue(name));
+        }
+        return map;
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Map<String, Object> beanToMapCglibImpl(Object bean) {
+        Map<String, Object> beanMap = BeanMap.create(bean);
+        Map<String, Object> map = new HashMap<>(beanMap.size());
+        for (Entry<String, Object> entry: beanMap.entrySet()) {
+            map.put(entry.getKey() + "", entry.getValue());
+        }
+        return map;
+    }
+
 }

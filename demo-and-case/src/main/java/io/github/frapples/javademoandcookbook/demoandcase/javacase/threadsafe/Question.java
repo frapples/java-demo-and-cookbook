@@ -1,6 +1,6 @@
 package io.github.frapples.javademoandcookbook.demoandcase.javacase.threadsafe;
 
-import io.github.frapples.javademoandcookbook.commonutils.utils.sequence.Range;
+import io.github.frapples.javademoandcookbook.commonutils.utils.collection.Range;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import lombok.AllArgsConstructor;

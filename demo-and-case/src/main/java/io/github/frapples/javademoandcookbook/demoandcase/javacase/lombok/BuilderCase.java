@@ -43,8 +43,8 @@ public class BuilderCase {
 
     public static void main(String[] args) {
         Object o = new Object();
-        Map<String, Object> r = BuilderCase.beanToMapHelper().bean(o).trimString(true).beanToMap();
-        System.out.println(r);
+        // Map<String, Object> r = BuilderCase.beanToMapHelper().bean(o).trimString(true).beanToMap();
+        // System.out.println(r);
 
         // r = beanToMapHelper().trimString(true).beanToMap();
         // System.out.println(r);

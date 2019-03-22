@@ -1,4 +1,4 @@
-package io.github.frapples.javademoandcookbook.commonutils.utils.sequence;
+package io.github.frapples.javademoandcookbook.commonutils.utils.collection;
 
 import java.util.ArrayList;
 import java.util.List;

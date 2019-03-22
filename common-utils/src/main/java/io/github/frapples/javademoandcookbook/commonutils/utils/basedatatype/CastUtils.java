@@ -1,4 +1,4 @@
-package io.github.frapples.javademoandcookbook.commonutils.utils.datatype;
+package io.github.frapples.javademoandcookbook.commonutils.utils.basedatatype;
 
 import com.google.common.primitives.Ints;
 
