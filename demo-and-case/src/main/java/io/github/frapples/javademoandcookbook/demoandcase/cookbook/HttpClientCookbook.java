@@ -1,4 +1,4 @@
-package io.github.frapples.javademoandcookbook.demoandcase.cookbook.http;
+package io.github.frapples.javademoandcookbook.demoandcase.cookbook;
 
 import com.alibaba.fastjson.JSONObject;
 import io.github.frapples.javademoandcookbook.commonutils.utils.serialization.JsonUtils;

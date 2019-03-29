@@ -1,4 +1,4 @@
-package io.github.frapples.javademoandcookbook.demoandcase.cookbook.http.datetime;
+package io.github.frapples.javademoandcookbook.demoandcase.cookbook;
 
 /**
  * @author Frapples <isfrapples@outlook.com>

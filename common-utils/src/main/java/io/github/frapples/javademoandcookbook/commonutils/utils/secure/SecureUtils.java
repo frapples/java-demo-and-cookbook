@@ -2,12 +2,17 @@ package io.github.frapples.javademoandcookbook.commonutils.utils.secure;
 
 
 import com.google.common.base.Preconditions;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hasher;
 import com.google.common.hash.Hashing;
 import com.google.common.io.BaseEncoding;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Random;
 import java.util.UUID;
+import org.apache.commons.io.IOUtils;
 
 public class SecureUtils {
 
@@ -48,5 +53,18 @@ public class SecureUtils {
     static public String hashPassword(String password, String salt) {
         return Hashing.sha256().hashString(password + salt,
             StandardCharsets.UTF_8).toString();
+    }
+
+
+    private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
+
+    static public String hash(HashFunction hashFunction, InputStream input) throws IOException {
+        Hasher hasher = hashFunction.newHasher();
+        int n;
+        byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+        while (IOUtils.EOF != (n = input.read(buffer))) {
+            hasher.putBytes(buffer, 0, n);
+        }
+        return hasher.hash().toString();
     }
 }
