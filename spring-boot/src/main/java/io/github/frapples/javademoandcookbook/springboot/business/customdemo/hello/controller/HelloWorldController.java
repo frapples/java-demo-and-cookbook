@@ -1,11 +1,10 @@
 package io.github.frapples.javademoandcookbook.springboot.business.customdemo.hello.controller;
 
 
-import io.github.frapples.javademoandcookbook.commonutils.utils.collection.ResponseMap;
+import io.github.frapples.javademoandcookbook.commonutils.utils.collection.fluentmap.ResponseMap;
 import io.github.frapples.javademoandcookbook.springboot.business.customdemo.hello.entity.dao.PersonDO;
 import io.github.frapples.javademoandcookbook.springboot.business.customdemo.hello.entity.dto.PersonVo;
 import io.github.frapples.javademoandcookbook.springboot.business.customdemo.hello.service.HelloWorldService;
-import io.github.frapples.javademoandcookbook.springboot.common.dto.IPageDto;
 import io.github.frapples.javademoandcookbook.springboot.common.utils.mybatisplus.QueryUtils;
 import io.github.frapples.javademoandcookbook.springboot.common.vo.ResponseVo;
 import java.util.List;
@@ -32,7 +31,7 @@ public class HelloWorldController {
     public ResponseVo hello() {
         List<PersonVo> persons = helloWorldService.hello();
 
-        Map<String, Object> r = new ResponseMap()
+        Map<String, Object> r = ResponseMap.of()
             .fPut("persons", persons)
             .fPut("a", QueryUtils.columnToString(PersonDO::getAge))
             .fPut("b", QueryUtils.columnToString(PersonDO::getId))
