@@ -1,34 +1,58 @@
 package io.github.frapples.javademoandcookbook.commonutils.utils.collection;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
+import lombok.AllArgsConstructor;
 
 /**
  * @author Frapples <isfrapples@outlook.com>
  * @date 18-9-28
  */
 
-public class Range {
+@AllArgsConstructor
+public class Range implements Iterable<Long> {
 
     private Range() {
         throw new UnsupportedOperationException();
     }
 
-    public static List<Integer> rangeList(int start, int end) {
-        return rangeList(start, end, 1);
+    public static Range range(long start, long end) {
+        return new Range(start, end, 1);
     }
 
-    public static List<Integer> rangeList(int start, int end, int step) {
-        if (step == 0 || (end - start) * step < 0) {
-            throw new IllegalArgumentException();
+    public static Range range(long start, long end, int step) {
+        if (step == 0) {
+            throw new IllegalArgumentException("step不能为0");
         }
 
-        // TODO: Lazy implementation
-        ArrayList<Integer> list = new ArrayList<>((end - start) / start);
-        for (int i = start; i < end; i += step) {
-            list.add(i);
+        if ((end - start) * step < 0) {
+            throw new IllegalArgumentException("给入的step会导致无穷流");
         }
-        return list;
+        return new Range(start, end, step);
     }
 
+    private long start;
+    private long end;
+    private int step;
+
+    @Override
+    public Iterator<Long> iterator() {
+        return new RangeIterator();
+    }
+
+    class RangeIterator implements Iterator<Long> {
+
+        private long next = start;
+
+        @Override
+        public boolean hasNext() {
+            return next < end;
+        }
+
+        @Override
+        public Long next() {
+            long next = this.next;
+            this.next += step;
+            return next;
+        }
+    }
 }

@@ -14,6 +14,11 @@ import java.util.Random;
 import java.util.UUID;
 import org.apache.commons.io.IOUtils;
 
+/**
+ * @author Frapples <isfrapples@outlook.com>
+ * @see BaseEncoding Guava的此工具类中提供base64编码解码实现
+ *
+ */
 public class SecureUtils {
 
     static public String randomSalt() {
@@ -21,11 +26,9 @@ public class SecureUtils {
     }
 
     /**
-     1. Guava的BaseEncoding提供了一些列base64的实现
-     2. 更多Base64实现：http://www.importnew.com/14961.html
      3. SecureRandom可用于生成安全的随机字符串
-     * @param length
-     * @return
+     * @param length 长度
+     * @return 随机字符串
      **/
     static public String randomString(int length) {
         final Random r = new SecureRandom();
@@ -46,9 +49,9 @@ public class SecureUtils {
 
     /**
      1. Guava的Hashing库提供了一组对hash函数的实现
-     * @param password
-     * @param salt
-     * @return
+     * @param password 密码
+     * @param salt 盐值
+     * @return hash值
      **/
     static public String hashPassword(String password, String salt) {
         return Hashing.sha256().hashString(password + salt,
