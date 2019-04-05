@@ -1,4 +1,4 @@
-package io.github.frapples.javademoandcookbook.springboot.common.dto;
+package io.github.frapples.javademoandcookbook.springboot.common.base.dto;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

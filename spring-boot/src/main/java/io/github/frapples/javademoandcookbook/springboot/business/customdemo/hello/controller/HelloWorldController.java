@@ -5,8 +5,9 @@ import io.github.frapples.javademoandcookbook.commonutils.utils.collection.fluen
 import io.github.frapples.javademoandcookbook.springboot.business.customdemo.hello.entity.dao.PersonDO;
 import io.github.frapples.javademoandcookbook.springboot.business.customdemo.hello.entity.dto.PersonVo;
 import io.github.frapples.javademoandcookbook.springboot.business.customdemo.hello.service.HelloWorldService;
+import io.github.frapples.javademoandcookbook.springboot.common.base.dto.IPageDto;
 import io.github.frapples.javademoandcookbook.springboot.common.utils.mybatisplus.QueryUtils;
-import io.github.frapples.javademoandcookbook.springboot.common.vo.ResponseVo;
+import io.github.frapples.javademoandcookbook.springboot.common.base.vo.ResponseVo;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;

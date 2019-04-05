@@ -1,8 +1,8 @@
 package io.github.frapples.javademoandcookbook.springboot.business.customdemo;
 
-import io.github.frapples.javademoandcookbook.springboot.common.vo.ResponseVo;
+import io.github.frapples.javademoandcookbook.springboot.common.base.vo.ResponseVo;
 import io.github.frapples.javademoandcookbook.springboot.common.exception.ErrorCode;
-import io.github.frapples.javademoandcookbook.springboot.common.exception.ErrorCodeWrapperException;
+import io.github.frapples.javademoandcookbook.springboot.common.exception.APIException;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.stereotype.Controller;
@@ -26,7 +26,7 @@ public class LocalExceptionHandlerDemoController {
         Map<String, Object> map = new HashMap<>();
         map.put("a", "1");
         map.put("b", "2");
-        throw new ErrorCodeWrapperException(ErrorCode.RECORD_EXISTS, "编号为XXX的记录已经存在");
+        throw new APIException(ErrorCode.RECORD_EXISTS, "编号为XXX的记录已经存在");
     }
 
     /**
@@ -35,8 +35,8 @@ public class LocalExceptionHandlerDemoController {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseVo<?> exceptionHandler(Exception e) {
-        if (e instanceof ErrorCodeWrapperException) {
-            ErrorCodeWrapperException errCodeException = (ErrorCodeWrapperException) e;
+        if (e instanceof APIException) {
+            APIException errCodeException = (APIException) e;
             if ((errCodeException.getErrorCode().equals(ErrorCode.SYSTEM_ERROR))) {
                 e.printStackTrace();
             }

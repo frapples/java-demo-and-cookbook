@@ -1,7 +1,7 @@
-package io.github.frapples.javademoandcookbook.springboot.common.vo;
+package io.github.frapples.javademoandcookbook.springboot.common.base.vo;
 
 import io.github.frapples.javademoandcookbook.springboot.common.exception.ErrorCode;
-import io.github.frapples.javademoandcookbook.springboot.common.exception.ErrorCodeWrapperException;
+import io.github.frapples.javademoandcookbook.springboot.common.exception.APIException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -38,7 +38,7 @@ public class ResponseVo<T> {
         return new ResponseVo<T>(errorCode.getCode(), errorCode.getMessage(), description, null);
     }
 
-    public static <T> ResponseVo<T> ofErrorCodeWrapperException(ErrorCodeWrapperException e) {
+    public static <T> ResponseVo<T> ofErrorCodeWrapperException(APIException e) {
         return ofFail(e.getErrorCode(), e.getDescription());
     }
 }

@@ -10,18 +10,18 @@ import lombok.Getter;
  * 具体的错误类型使用ErrorCode区分
  * 当异常抛出至顶层（Controller）统一将其转换为前端错误码返回（手动处理也可，建议AOP）
  */
-public class ErrorCodeWrapperException extends RuntimeException {
+public class APIException extends RuntimeException {
 
     @Getter
     ErrorCode errorCode;
     @Getter
     String description;
 
-    public ErrorCodeWrapperException(ErrorCode errorCode) {
+    public APIException(ErrorCode errorCode) {
         this.errorCode = errorCode;
     }
 
-    public ErrorCodeWrapperException(ErrorCode errorCode, String description) {
+    public APIException(ErrorCode errorCode, String description) {
         super(description);
         this.description = description;
         this.errorCode = errorCode;

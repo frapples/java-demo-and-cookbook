@@ -1,8 +1,8 @@
-package io.github.frapples.javademoandcookbook.springboot.common.vo;
+package io.github.frapples.javademoandcookbook.springboot.common.base.vo;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.base.Preconditions;
-import io.github.frapples.javademoandcookbook.springboot.common.dto.IPageDto;
+import io.github.frapples.javademoandcookbook.springboot.common.base.dto.IPageDto;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
