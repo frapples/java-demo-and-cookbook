@@ -2,6 +2,7 @@ package io.github.frapples.javademoandcookbook.commonutils.utils.file;
 
 import java.util.Arrays;
 import java.util.List;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  * @author Frapples <isfrapples@outlook.com>
@@ -15,7 +16,7 @@ public class PathUtils {
     private static final List<Character> allSep = Arrays.asList('/', '\\', SEP);
 
 
-    static String pathJoin(String... seg) {
+    public static String join(String... seg) {
         if (seg == null || seg.length == 0) {
             return "";
         }
@@ -33,9 +34,26 @@ public class PathUtils {
                     end--;
                 }
                 path.append(s, first, end + 1);
-                path.append(SEP);
+                if (i != seg.length - 1) {
+                    path.append(SEP);
+                }
             }
         }
         return path.toString();
+    }
+
+    public static String dirname(String path) {
+        if (path == null || path.isEmpty()) {
+            return "";
+        }
+
+        if (allSep.contains(path.charAt(path.length() - 1))) {
+            path = path.substring(0, path.length() - 1);
+        }
+        return FilenameUtils.getFullPath(path);
+    }
+
+    public static String basename(String path) {
+        return FilenameUtils.getName(path);
     }
 }

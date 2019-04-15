@@ -7,6 +7,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -48,6 +49,19 @@ public class WebConfig {
         // 允许 *.xxx.com 跨域
         String[] allowOrigins = new String[]{"https?://(.*).xxx.com(\\:\\d+)?"};
         registrationBean.setFilter(new RegexpMatcherCorsFilter(allowOrigins));
+        return registrationBean;
+    }
+
+    /**
+     * Thanks for https://stackoverflow.com/questions/5928046/spring-mvc-utf-8-encoding
+     * https://stackoverflow.com/questions/13504732/how-to-use-org-springframework-web-filter-characterencodingfilter-to-correct-cha
+     * 解决static资源乱码问题, 解决HttpServletRequest.getParameter使用错误编码解码问题
+     */
+    @Bean
+    public FilterRegistrationBean filterRegistrationBean() {
+        CharacterEncodingFilter filter = new CharacterEncodingFilter("UTF-8", true);
+        FilterRegistrationBean<CharacterEncodingFilter> registrationBean = new FilterRegistrationBean<>(filter);
+        registrationBean.addUrlPatterns("/*");
         return registrationBean;
     }
 }

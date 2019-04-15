@@ -12,8 +12,8 @@ class PathUtilsTest {
 
     @Test
     void join() {
-        String p1 = PathUtils.pathJoin("/tmp", "path", "to", "file.txt");
-        String p2 = PathUtils.pathJoin("/tmp", "path/", "to", "file.txt");
+        String p1 = PathUtils.join("/tmp", "path", "to", "file.txt");
+        String p2 = PathUtils.join("/tmp", "path/", "to", "file.txt");
         System.out.println(p1);
         assertEquals(p1, p2);
     }

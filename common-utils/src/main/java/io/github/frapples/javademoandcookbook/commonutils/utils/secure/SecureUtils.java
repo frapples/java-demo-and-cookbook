@@ -12,6 +12,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Random;
 import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -67,6 +69,31 @@ public class SecureUtils {
         byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
         while (IOUtils.EOF != (n = input.read(buffer))) {
             hasher.putBytes(buffer, 0, n);
+        }
+        return hasher.hash().toString();
+    }
+
+    /**
+     * 简单的对zip文件进行hash，解开zip包对原始文件和文件名进行hash。
+     * 此hash算法非标准，仅供测试时使用。
+     * @param hashFunction hash函数
+     * @see com.google.common.hash.Hashing
+     * @param inputStream 格式为zip的输入流
+     * @return hash值
+     * @throws IOException
+     */
+    public static String hashZipForTest(HashFunction hashFunction, InputStream inputStream) throws IOException {
+        ZipInputStream stream = new ZipInputStream(inputStream);
+        ZipEntry entry;
+        Hasher hasher = hashFunction.newHasher();
+        while((entry = stream.getNextEntry()) != null) {
+            hasher.putBytes(entry.getName().getBytes());
+            entry.getName();
+            int n;
+            byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+            while (IOUtils.EOF != (n = stream.read(buffer))) {
+                hasher.putBytes(buffer, 0, n);
+            }
         }
         return hasher.hash().toString();
     }
