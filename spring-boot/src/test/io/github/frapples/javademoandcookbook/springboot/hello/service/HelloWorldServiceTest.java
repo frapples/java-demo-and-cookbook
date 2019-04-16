@@ -1,4 +1,4 @@
-package io.github.frapples.javademoandcookbook.springboot.business.customdemo.hello.service;
+package io.github.frapples.javademoandcookbook.springboot.business.hello.service;
 
 import static org.junit.Assert.*;
 

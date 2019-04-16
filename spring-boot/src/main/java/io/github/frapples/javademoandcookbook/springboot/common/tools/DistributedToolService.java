@@ -32,7 +32,7 @@ public class DistributedToolService {
 
     @Autowired
     public DistributedToolService(PlatformTransactionManager platformTransactionManager,
-        RedisConnectionFactory redisConnectionFactory, RedissonClient redissonClient) {
+        @Autowired(required = false) RedisConnectionFactory redisConnectionFactory, @Autowired(required = false) RedissonClient redissonClient) {
         this.platformTransactionManager = platformTransactionManager;
         this.redisConnectionFactory = redisConnectionFactory;
         this.redissonClient = redissonClient;

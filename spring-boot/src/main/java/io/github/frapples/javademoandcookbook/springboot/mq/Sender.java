@@ -18,7 +18,7 @@ public class Sender {
     private final AmqpTemplate amqpTemplate;
 
     @Autowired
-    public Sender(AmqpTemplate amqpTemplate) {
+    public Sender(@Autowired(required = false) AmqpTemplate amqpTemplate) {
         this.amqpTemplate = amqpTemplate;
     }
 

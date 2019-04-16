@@ -1,6 +1,6 @@
-package io.github.frapples.javademoandcookbook.springboot.business.customdemo.hello.entity.dto;
+package io.github.frapples.javademoandcookbook.springboot.business.hello.entity.dto;
 
-import io.github.frapples.javademoandcookbook.springboot.business.customdemo.hello.entity.dao.PersonDO;
+import io.github.frapples.javademoandcookbook.springboot.business.hello.entity.dao.PersonDO;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 

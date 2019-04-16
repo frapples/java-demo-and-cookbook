@@ -1,4 +1,4 @@
-package io.github.frapples.javademoandcookbook.springboot.business.customdemo.hello.entity.dao;
+package io.github.frapples.javademoandcookbook.springboot.business.hello.entity.dao;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

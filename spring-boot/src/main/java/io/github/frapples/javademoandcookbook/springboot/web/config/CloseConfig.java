@@ -12,7 +12,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
  * @date 2019/3/8
  */
 
-@Configuration
+//@Configuration
 public class CloseConfig {
 
     @Bean
