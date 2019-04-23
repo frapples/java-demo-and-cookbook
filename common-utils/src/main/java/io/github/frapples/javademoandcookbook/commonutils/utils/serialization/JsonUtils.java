@@ -1,5 +1,6 @@
 package io.github.frapples.javademoandcookbook.commonutils.utils.serialization;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import lombok.SneakyThrows;
@@ -31,8 +32,8 @@ public class JsonUtils {
     @SneakyThrows
     public static String beautifyJsonString(String json) {
         ObjectMapper mapper = new ObjectMapper();
-        HashMap map = mapper.readValue(json, HashMap.class);
-        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(map);
+        JsonNode node = mapper.readValue(json, JsonNode.class);
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node);
     }
 
 

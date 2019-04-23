@@ -61,7 +61,7 @@
       <groupId>org.projectlombok</groupId>
       <!-- https://projectlombok.org/ -->
       <artifactId>lombok</artifactId>
-      <version>1.16.20</version>
+      <version>1.18.2</version>
       <scope>compile</scope>
     </dependency>
 
