@@ -83,10 +83,10 @@
     </dependency>
     <dependency>
       <!-- validation 需要具体的实现 -->
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-validator</artifactId>
-      <version>4.2.0.Final</version>
-    </dependency>
+    <groupId>org.hibernate.validator</groupId>
+    <artifactId>hibernate-validator</artifactId>
+    <version>6.0.16.Final</version>
+</dependency>
 
     <dependency>
       <!-- Apache HttpClient -->
