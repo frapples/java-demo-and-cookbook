@@ -1,7 +1,9 @@
 package io.github.frapples.javademoandcookbook.demoandcase.javacase.threadsafe;
 
+import com.google.common.collect.Iterables;
 import io.github.frapples.javademoandcookbook.commonutils.utils.collection.Range;
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Queue;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -16,7 +18,7 @@ import lombok.SneakyThrows;
 public class Question {
 
     public static void main(String[] args) {
-        Queue<Integer> queue = new ArrayDeque<>(Range.rangeList(1, 100));
+        Queue<Integer> queue = new ArrayDeque<>(Arrays.asList(Iterables.toArray(Iterables.transform(Range.range(1, 100), Long::intValue), Integer.class)));
 
         Object condition = new Object();
         new PrintThread(0, queue, condition).start();

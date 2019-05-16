@@ -1,7 +1,9 @@
 package io.github.frapples.javademoandcookbook.demoandcase.javacase.multithread;
 
+import com.google.common.collect.Iterables;
 import com.google.common.primitives.Ints;
 import io.github.frapples.javademoandcookbook.commonutils.utils.collection.Range;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveTask;
@@ -18,7 +20,7 @@ public class ForkJoinPoolDemo {
     public static void main(String[] args) {
         ForkJoinPool pool = new ForkJoinPool(Runtime.getRuntime().availableProcessors());
 
-        List<Integer> numbers = Range.rangeList(1, 1000 * 10000);
+        List<Integer> numbers = Arrays.asList(Iterables.toArray(Iterables.transform(Range.range(1, 1000 * 10000), Long::intValue), Integer.class));
         System.out.println("数据初始化完成");
 
         {
