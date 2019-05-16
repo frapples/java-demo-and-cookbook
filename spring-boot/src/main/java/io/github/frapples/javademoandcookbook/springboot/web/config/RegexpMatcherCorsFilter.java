@@ -1,5 +1,6 @@
 package io.github.frapples.javademoandcookbook.springboot.web.config;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -39,7 +40,7 @@ public class RegexpMatcherCorsFilter extends CorsFilter {
             }
 
             if (super.getAllowedOrigins().contains(ALL)) {
-                return super.getAllowCredentials() != Boolean.TRUE ? ALL : requestOrigin;
+                return !Objects.equals(super.getAllowCredentials(), Boolean.TRUE) ? ALL : requestOrigin;
             }
 
             for (String allowedOrigin : super.getAllowedOrigins()) {

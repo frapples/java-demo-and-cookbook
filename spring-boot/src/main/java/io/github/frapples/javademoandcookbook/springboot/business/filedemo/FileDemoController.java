@@ -1,6 +1,6 @@
 package io.github.frapples.javademoandcookbook.springboot.business.filedemo;
 
-import io.github.frapples.javademoandcookbook.springboot.common.base.vo.ResponseVo;
+import io.github.frapples.javademoandcookbook.springbootwebcore.base.vo.ResponseVo;
 import io.github.frapples.javademoandcookbook.springboot.web.resolver.UserId;
 import java.io.File;
 import java.io.IOException;

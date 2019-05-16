@@ -1,10 +1,11 @@
 server:
   port: 8181
-  session:
-    cookie:
-      http-only: true
-      secure: true
-    timeout: 1800
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        secure: true
+      timeout: 1800
 spring:
   profiles:
     active: test
@@ -16,6 +17,7 @@ spring:
   http:
     encoding:
       force: true
+  servlet:
     multipart:
       resolve-lazily: true
       max-file-size: 5MB
@@ -29,7 +31,7 @@ spring:
       - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
       - org.redisson.spring.starter.RedissonAutoConfiguration
     # 关闭Health Indicator
-      - org.springframework.boot.actuate.autoconfigure.HealthIndicatorAutoConfiguration
+    # - org.springframework.boot.actuate.autoconfigure.HealthIndicatorAutoConfiguration
 
   datasource:
     # h2配置：https://juejin.im/post/5ab4b339f265da238c3a9d0a
@@ -56,28 +58,21 @@ spring:
       root: debug
 
 mybatis-plus:
+  # MyBatis Mapper 所对应的 XML 文件位置, 多模块项目的扫描路径需以 classpath*: 开头
   mapper-locations: classpath:/mapper/*Mapper.xml
-  #实体扫描，多个package用逗号或者分号分隔
-  # typeAliasesPackage: com.yourpackage.*.entity
+  # MyBaits 别名包扫描路径。该包中的类，在XML 文件中可以直接使用类名，无需用全限定名
+  # type-aliases-package: com.yourpackage.*.entity
   global-config:
-    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
-    id-type: 0
-    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
-    field-strategy: 2
-    #驼峰下划线转换
-    db-column-underline: true
-    #刷新mapper 调试神器
-    refresh-mapper: true
-    #数据库大写下划线转换
-    #capital-mode: true
-    # Sequence序列接口实现类配置
-    key-generator: com.baomidou.mybatisplus.incrementer.OracleKeyGenerator
-    #逻辑删除配置（下面3个配置）
-    logic-delete-value: 1
-    logic-not-delete-value: 0
-    # sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
-    #自定义填充策略接口实现
-    # meta-object-handler: com.baomidou.springboot.MyMetaObjectHandler
+    db-config:
+      # 主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+      id-type: AUTO
+      # 字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+      field-strategy: NOT_EMPTY
+      # 逻辑删除配置（下面3个配置）, 还需要配置injector
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      # 数据库大写下划线转换
+      #capital-mode: true
   configuration:
     #配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
     map-underscore-to-camel-case: true

@@ -1,7 +1,7 @@
 package io.github.frapples.javademoandcookbook.demoandcase.javacase.lombok;
 
 import com.google.common.base.CaseFormat;
-import io.github.frapples.javademoandcookbook.commonutils.utils.collection.fluentmap.ResponseMapBase;
+import io.github.frapples.javademoandcookbook.commonutils.utils.collection.fluentmap.ResponseMap;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +27,7 @@ public class BuilderCase {
     @Builder(builderMethodName = "beanToMapHelper", buildMethodName = "beanToMap", builderClassName = "BeanToMapBuilder")
     public static <T> Map<String, Object> beanToMap(@lombok.NonNull T bean, Boolean filterNull, Boolean trimString, CaseFormat caseFormat) {
         trimString = trimString == null ? false : trimString;
-        return new ResponseMapBase()
+        return ResponseMap.of()
             .fPut("bean", bean)
             .fPut("filterNull", filterNull)
             .fPut("trimString", trimString)

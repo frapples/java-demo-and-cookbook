@@ -6,7 +6,8 @@ import io.github.frapples.javademoandcookbook.springboot.business.hello.entity.d
 import io.github.frapples.javademoandcookbook.springboot.business.hello.entity.dto.PersonVo;
 import io.github.frapples.javademoandcookbook.springboot.business.hello.service.HelloWorldService;
 import io.github.frapples.javademoandcookbook.springboot.common.utils.mybatisplus.QueryUtils;
-import io.github.frapples.javademoandcookbook.springboot.common.base.vo.ResponseVo;
+import io.github.frapples.javademoandcookbook.springbootwebcore.base.vo.ResponseVo;
+import io.github.frapples.javademoandcookbook.springbootwebcore.config.exceptionhandler.ExceptionToErrorCode;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * @author Frapples <isfrapples@outlook.com>
+ * @date 2018/10/26
+ */
 @Controller
 @RequestMapping("/api/hello")
+@ExceptionToErrorCode
 public class HelloWorldController {
 
     private final HelloWorldService helloWorldService;

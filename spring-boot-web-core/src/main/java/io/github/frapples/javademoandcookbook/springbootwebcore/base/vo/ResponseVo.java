@@ -1,7 +1,7 @@
-package io.github.frapples.javademoandcookbook.springboot.common.base.vo;
+package io.github.frapples.javademoandcookbook.springbootwebcore.base.vo;
 
-import io.github.frapples.javademoandcookbook.springboot.common.exception.ErrorCode;
-import io.github.frapples.javademoandcookbook.springboot.common.exception.APIException;
+import io.github.frapples.javademoandcookbook.springbootwebcore.base.exception.ErrorCode;
+import io.github.frapples.javademoandcookbook.springbootwebcore.base.exception.APIException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

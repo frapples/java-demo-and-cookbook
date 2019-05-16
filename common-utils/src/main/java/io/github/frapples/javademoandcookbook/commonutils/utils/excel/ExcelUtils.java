@@ -31,7 +31,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author Frapples <isfrapples@outlook.com>
@@ -82,15 +81,15 @@ public class ExcelUtils {
         return export((start, count) -> list.subList(start, start + count), list.size(), tClass);
     }
 
-    public static <D> ExcelImportResult<D> importFile(MultipartFile file, Class<? super D> clazz) throws IOException {
+    public static <D> ExcelImportResult<D> importFile(File file, Class<? super D> clazz) throws IOException {
         // 校验文件格式
         List<String> legalExtensions = Arrays.asList("xls", "xlsx");
-        String ext = FilenameUtils.getExtension(file.getOriginalFilename());
+        String ext = FilenameUtils.getExtension(file.getAbsolutePath());
         if (!legalExtensions.contains(ext)) {
             throw new RuntimeException("只支持excel格式文件!");
         }
 
-        InputStream inputStream = file.getInputStream();
+        InputStream inputStream = new FileInputStream(file);
         ExcelImportResult<D> result = importFile(inputStream, clazz);
 
         skipEndEmptyLine(inputStream, result);
