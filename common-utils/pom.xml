@@ -13,7 +13,7 @@
 
   <properties>
     <!-- 此处定义的属性，后面即可引用 -->
-    <org.springframework.version>5.1.6.RELEASE</org.springframework.version>
+    <org.springframework.version>5.1.4.RELEASE</org.springframework.version>
   </properties>
 
   <build>
@@ -36,7 +36,7 @@
       <groupId>org.projectlombok</groupId>
       <!-- https://projectlombok.org/ -->
       <artifactId>lombok</artifactId>
-      <version>1.18.6</version>
+      <version>1.18.8</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -48,7 +48,7 @@
       <!-- 为java.lang中的类提供一系列工具类。https://github.com/apache/commons-lang -->
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.9</version>
+      <version>3.8.1</version>
     </dependency>
 
     <dependency>
@@ -118,6 +118,28 @@
       <groupId>cn.afterturn</groupId>
       <artifactId>easypoi-base</artifactId>
       <version>3.2.0</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>slf4j-api</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-lang3</artifactId>
+          <groupId>org.apache.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>validation-api</artifactId>
+          <groupId>javax.validation</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-codec</artifactId>
+          <groupId>commons-codec</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>guava</artifactId>
+          <groupId>com.google.guava</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>cn.afterturn</groupId>
@@ -152,6 +174,13 @@
       <artifactId>jackson-databind</artifactId>
       <version>2.9.8</version>
       <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>1.7.26</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

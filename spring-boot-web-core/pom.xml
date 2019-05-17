@@ -52,7 +52,7 @@
       <groupId>org.projectlombok</groupId>
       <!-- https://projectlombok.org/ -->
       <artifactId>lombok</artifactId>
-      <version>1.18.2</version>
+      <version>1.18.8</version>
       <scope>compile</scope>
     </dependency>
 
