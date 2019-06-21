@@ -57,6 +57,14 @@
       <artifactId>commons-io</artifactId>
       <version>2.6</version>
     </dependency>
+
+    <!-- 提供了对对象池的抽象。 https://commons.apache.org/proper/commons-pool/ -->
+    <dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-pool2</artifactId>
+    <version>2.6.2</version>
+</dependency>
+
     <dependency>
       <!-- apache commons text，提供了针对字符串格式化的工具。 https://commons.apache.org/proper/commons-text/ -->
       <groupId>org.apache.commons</groupId>
@@ -176,12 +184,33 @@
       <scope>compile</scope>
     </dependency>
 
+    <!-- jackson的xml扩展 -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-xml</artifactId>
+      <version>2.9.8</version>
+    </dependency>
+
+    <!-- dom4j -->
+    <dependency>
+      <groupId>dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+      <version>1.6.1</version>
+      <exclusions>
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <version>1.7.26</version>
       <scope>test</scope>
     </dependency>
+
   </dependencies>
 
 </project>
