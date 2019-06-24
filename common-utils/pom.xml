@@ -211,6 +211,19 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- spring aop -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>
+      <version>5.1.4.RELEASE</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>1.9.2</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 
 </project>
