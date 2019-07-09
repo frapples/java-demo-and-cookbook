@@ -16,8 +16,13 @@ import org.slf4j.event.Level;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AroundLog {
 
-    String enterFormat() default "Enter function ${functionName}";
-    String exitFormat() default "Exit function ${functionName}";
+    String enterFormat() default "Enter function ${functionName}(requestId=${requestId}), ${enterMessage}";
+    String exitFormat() default "Return from function ${functionName}(requestId=${requestId}), ${exitMessage}";
+    String throwFormat() default "Throw from function ${functionName}(requestId=${requestId}), ${throwMessage}";
+    String enterMessage() default "";
+    String exitMessage() default "";
+    String throwMessage() default "exception:\n${exception}";
 
     Level level() default Level.DEBUG;
+
 }

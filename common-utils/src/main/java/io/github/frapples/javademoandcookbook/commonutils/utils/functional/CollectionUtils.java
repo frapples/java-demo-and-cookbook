@@ -14,11 +14,15 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Frapples <isfrapples@outlook.com>
  * @date 2019/3/22
  */
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CollectionUtils {
 
     public static <E, T> Map<E, T> toIndexMap(Collection<? extends T> collection, Function<? super T, ? extends E> transform) {
@@ -74,6 +78,21 @@ public class CollectionUtils {
         TreeSet<E> set = new TreeSet<>(comparator);
         set.addAll(initValues);
         return set;
+    }
+
+    public static  <T> void skippedSort(List<T> list, Predicate<T> predicate, Comparator<? super T> comparator) {
+        List<Integer> itemIndex = new ArrayList<>();
+        List<T> sortedItems = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (predicate.test(list.get(i))) {
+                itemIndex.add(i);
+                sortedItems.add(list.get(i));
+            }
+        }
+        sortedItems.sort(comparator);
+        for (int i = 0; i < sortedItems.size(); i++) {
+            list.set(itemIndex.get(i), sortedItems.get(i));
+        }
     }
 }
 

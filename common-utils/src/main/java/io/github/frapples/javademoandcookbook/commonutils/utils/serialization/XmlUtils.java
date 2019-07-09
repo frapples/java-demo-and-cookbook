@@ -3,12 +3,14 @@ package io.github.frapples.javademoandcookbook.commonutils.utils.serialization;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.RuntimeJsonMappingException;
+import io.github.frapples.javademoandcookbook.commonutils.utils.functional.CollectionUtils;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,6 +24,9 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.Visitor;
+import org.dom4j.VisitorSupport;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
@@ -198,6 +203,28 @@ public class XmlUtils {
     public static byte[] pretty(byte[] xml) {
         Document document = parse(xml);
         return toXml(document, true);
+    }
+
+    @SneakyThrows
+    public static byte[] sortAndPretty(byte[] xml) {
+        Document document = parse(xml);
+        document = sortDocument(document);
+        return toXml(document, true);
+    }
+
+    public static Document sortDocument(Document document) {
+        Visitor visitor = new VisitorSupport() {
+            @Override
+            public void visit(Element node) {
+                @SuppressWarnings("unchecked")
+                List<Node> contents = node.content();
+                CollectionUtils.skippedSort(contents, (n) -> n instanceof Element, Comparator.comparing(Node::getName));
+                node.setContent(contents);
+                super.visit(node);
+            }
+        };
+        document.accept(visitor);
+        return document;
     }
 
 

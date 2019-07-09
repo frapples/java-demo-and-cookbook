@@ -1,5 +1,6 @@
 package io.github.frapples.javademoandcookbook.commonutils.utils.log;
 
+import org.jooq.lambda.fi.util.function.CheckedSupplier;
 import org.slf4j.Logger;
 import org.slf4j.event.Level;
 
@@ -46,6 +47,10 @@ public class LogUtils {
             default:
                 throw new IllegalStateException("Illegal state");
         }
+    }
+
+    public static LazyString lazy(CheckedSupplier<?> checkedSupplier) {
+        return new LazyString(checkedSupplier);
     }
 
 }
