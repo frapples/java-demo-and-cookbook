@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8>
+    <title>管理系统</title>
+
+    <!-- import vue framework -->
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@3.0.6/dist/vue-router.js"></script>
+    <script src="https://unpkg.com/vuex@3.1.1/dist/vuex.js"></script>
+    <script src="https://unpkg.com/http-vue-loader@1.4.1/src/httpVueLoader.js"></script>
+
+    <!-- import moment -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/zh-cn.js"></script>
+
+    <!-- import antd -->
+    <link rel="stylesheet" href="https://unpkg.com/ant-design-vue@1.4.4/dist/antd.min.css">
+    <script src="https://unpkg.com/ant-design-vue@1.4.4/dist/antd-with-locales.min.js"></script>
+
+    <!-- import babel-standalone -->
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js" type="text/javascript"></script>
+
+    <!-- import utils -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sprintf/1.1.2/sprintf.min.js"></script>
+
+    <!-- import custom utils -->
+    <script src="./js/utils/utils.js"></script>
+
+    <!-- import custom config -->
+    <script src="./src/config/config.js"></script>
+    <script src="./src/config/router.js"></script>
+    <script src="./src/config/store.js"></script>
+</head>
+<body>
+<div id="app">
+    <router-view></router-view>
+</div>
+<script>
+    let app = new Vue({
+        store: globalModules.store,
+        router: globalModules.router,
+        components: { },
+        el: '#app',
+    });
+</script>
+</body>
+</html>
