@@ -42,7 +42,7 @@
       <groupId>com.google.guava</groupId>
       <!-- https://github.com/google/guava -->
       <artifactId>guava</artifactId>
-      <version>27.1-jre</version>
+      <version>29.0-jre</version>
     </dependency>
     <dependency>
       <!-- 为java.lang中的类提供一系列工具类。https://github.com/apache/commons-lang -->
