@@ -55,7 +55,7 @@
       <!-- apache commons io，提供了针对IO和文件的工具类。https://github.com/apache/commons-io -->
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.6</version>
+      <version>2.7</version>
     </dependency>
 
     <!-- 提供了对对象池的抽象。 https://commons.apache.org/proper/commons-pool/ -->
