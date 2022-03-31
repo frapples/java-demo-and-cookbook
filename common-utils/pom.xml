@@ -13,7 +13,7 @@
 
   <properties>
     <!-- 此处定义的属性，后面即可引用 -->
-    <org.springframework.version>5.1.4.RELEASE</org.springframework.version>
+    <org.springframework.version>5.3.18</org.springframework.version>
   </properties>
 
   <build>
